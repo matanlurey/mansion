@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="mansion API docs, for the Dart programming language.">
+  <title>mansion - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">mansion package</li>
+  </ol>
+  <div class="self-name">mansion</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="mansion">Mansion</h1>
+<p>A stately library for crafting and deciphering ANSI escape codes.</p>
+<p><img src="https://github.com/matanlurey/mansion/actions/workflows/dart.yml/badge.svg" alt="GitHub Actions Workflow Status">](<a href="https://github.com/matanlurey/mansion/actions/workflows/dart.yml">github.com/matanlurey/mansion/actions/workflows/dart.yml</a>)
+<a href="https://coveralls.io/github/matanlurey/mansion?branch=main"><img src="https://coveralls.io/repos/github/matanlurey/mansion/badge.svg?branch=main" alt="Coverage Status"></a>
+<a href="https://pub.dev/packages/mansion"><img src="https://img.shields.io/pub/v/mansion.svg" alt="Pub Package"></a>
+<a href="https://pub.dev/documentation/mansion/latest/"><img src="https://img.shields.io/badge/dartdoc-reference-blue.svg" alt="Dartdoc reference"></a></p>
+<img src="https://github.com/asciinema/agg/assets/168174/6832d773-22f9-47b9-a83c-0e6f260da849" width="634">
+<p>Styling text is ~1-line with lots of possibilities:</p>
+<pre class="language-dart"><code class="language-dart">print('Hello World'.style(Style.foreground(Color.red), Style.bold));
+</code></pre>
+<p>When you're ready, graduate to a full-featured package for more control:</p>
+<pre class="language-dart"><code class="language-dart">stdout.writeAnsiAll([
+  // Sets the cursor position to the top-left corner.
+  CursorPosition.reset,
+
+  // Clear the screen.
+  Clear.all,
+
+  // Set a bunch of styles.
+  SetStyles(
+    Style.bold,
+    Style.underline,
+    Style.italic,
+    Style.foreground(Color.red),
+    Style.background(Color.green),
+  ),
+
+  // Print some text.
+  Print('Hello, World!'),
+
+  // Reset all styles.
+  SetStyles.reset,
+
+  // Move the cursor to the next line.
+  AsciiControl.lineFeed,
+]);
+</code></pre>
+<p>Includes a full-featured ANSI escape <em>decoder</em> for writing terminal emulators!</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Cross-platform support for most popular ANSI escape codes.</li>
+<li>Fully tested and documented with examples and explanations.</li>
+<li>Walkthroughs for common use-cases and best practices.</li>
+<li>Intuitive API using the latest Dart features.</li>
+<li>Practically <em>zero</em> dependencies (only <code>meta</code> for annotations).</li>
+</ul>
+<p>Importantly, <code>mansion</code> is <em>not</em> a general purpose terminal library; it does not
+provide terminal emulation, any real input handling other than event code
+parsing, anything to do with FFI or native code, or any other terminal-related
+functionality.</p>
+<p>Build on top of <code>mansion</code> to create your own terminal libraries, or use it to
+style text in your command-line applications.</p>
+<h2 id="contributing">Contributing</h2>
+<p>To run the tests, run:</p>
+<pre class="language-shell"><code class="language-shell">dart test
+</code></pre>
+<p>To check code coverage locally, run:</p>
+<pre class="language-shell"><code class="language-shell">dart tool/coverage.dart
+</code></pre>
+<p>To preview <code>dartdoc</code> output locally, run:</p>
+<pre class="language-shell"><code class="language-shell">dart tool/dartdoc.dart
+</code></pre>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="mansion">
+  <span class="name"><a href="mansion/mansion-library.html">mansion</a></span> 
+
+</dt>
+<dd>A stately library for crafting and deciphering ANSI escape codes/sequences.
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">mansion package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">mansion</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="topics/Introduction-topic.html">Introduction</a></li>
+        <li><a href="topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></li>
+        <li><a href="topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></li>
+        <li><a href="topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></li>
+        <li><a href="topics/Event Handling-topic.html">Event&nbsp;Handling</a></li>
+        <li><a href="topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></li>
+        <li><a href="topics/Best Practices-topic.html">Best&nbsp;Practices</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="mansion/mansion-library.html">mansion</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

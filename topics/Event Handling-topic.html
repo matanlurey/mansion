@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="Event Handling topic docs, for the Dart programming language.">
+  <title>Event Handling topic - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Event Handling topic</li>
+  </ol>
+  <div class="self-name">Event Handling</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Event Handling</span> topic</h1>
+  
+<section class="desc markdown">
+  <p>As <code>mansion</code> primarily targets producing and interpreting ANSI escape codes, it
+is <em>not</em> a fully featured event handling library. However, it does provide
+support for ANSI escapes that enable/disable different kinds of input events,
+as well as parsing of event codes into structured data.</p>
+<h2 id="a-note-on-raw-mode">A note on "raw mode"</h2>
+<p>The default behavior of a terminal is to send input to the program as soon as
+it is typed. This is called "cooked mode" or "canonical mode". However, when
+the terminal is in "raw mode", input is sent to the program immediately, without
+waiting for a newline character. This is useful for interactive programs that
+need to respond to input in real-time.</p>
+<p>Raw mode can be enabled programatically using the <code>stdin</code> stream from <code>dart:io</code>:</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:io';
+
+void main() {
+  stdin
+    ..echoMode = false
+    ..lineMode = false;
+
+  // Read input from stdin.
+  stdin.listen((event) {
+    print('Received event: $event');
+  });
+}
+</code></pre>
+<p>See <a href="Best%25Practices-topic.html">best practices</a> for more recommendations.</p>
+<h2 id="parsing-events-from-stdin">Parsing events from <code>stdin</code></h2>
+<p>The <code>Event</code> class can parse input events from <code>stdin</code> or a similar stream.</p>
+<p>However, given this is primarily a library for producing ANSI escape codes, it
+is not a fully featured event handling library. It does not provide support for
+buffering input, for example, or provide any helper functions for handling
+events.</p>
+<p>A rudimentary loop could look like this:</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:io';
+
+import 'package:mansion/mansion.dart';
+
+void main() async {
+  late final StreamSubscription&lt;void&gt; listener;
+  try {
+    // Enable raw mode when the program starts.
+    stdin
+      ..echoMode = false
+      ..lineMode = false;
+
+    // Create a buffer of events.
+    final buffer = &lt;List&lt;int&gt;&gt;[];
+    listener = stdin.listen(buffer.add);
+
+    while (true) {
+      // Always yield to the event loop.
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      // If no events are available, continue.
+      if (buffer.isEmpty) {
+        continue;
+      }
+
+      // Copy the events and clear the buffer.
+      final captured = List.from(buffer);
+      buffer.clear();
+
+      // If we receive an "escape" key, terminate the program.
+      for (final input in captured) {
+        switch (Event.tryParse(input)) {
+          case KeyEvent(ControlKey.escape):
+            return;
+          default:
+            print('$input');
+        }
+      }
+    }
+  } finally {
+    // Disable raw mode when the program exits.
+    stdin
+      ..echoMode = true
+      ..lineMode = true;
+  }
+}
+</code></pre>
+<p>See <a href="Best%25Practices-topic.html">best practices</a> for more recommendations.</p>
+<h2 id="capturing-mouse-events">Capturing mouse events</h2>
+<p>By default, mouse events are not captured by most terminals.</p>
+<p>The <code>EnableMouseCapture</code> escape provides variants to enable mouse events:</p>
+<pre class="language-dart"><code class="language-dart">// Enable specific types of mouse events.
+stdout.writeAnsi(EnableMouseCapture.normal);
+stdout.writeAnsi(EnableMouseCapture.button);
+stdout.writeAnsi(EnableMouseCapture.any);
+stdout.writeAnsi(EnableMouseCapture.sgr);
+
+// Or all mouse events at once.
+stdout.writeAnsiAll(EnableMouseCapture.all);
+</code></pre>
+<p>After enabling mouse events, <code>Event.tryParse</code> will capture <code>MouseEvent</code>s:</p>
+<pre class="language-dart"><code class="language-dart">final event = Event.tryParse(input);
+switch (event) {
+  case MouseEvent e:
+    print('Mouse event: $e');
+}
+</code></pre>
+<p>As usual, remember to disable mouse events when you are done:</p>
+<pre class="language-dart"><code class="language-dart">// Disable mouse events.
+stdout.writeAnsiAll(DisableMouseCapture.all);
+</code></pre>
+<h2 id="capturing-paste-events">Capturing paste events</h2>
+<p>By default, pasting text is treated as a series of key events.</p>
+<p>The <code>CapturePaste</code> escape provides variants to enable and disable paste
+<em>events</em>, which are easily distinguishable from key events and decoded as a
+single <code>PasteEvent</code>:</p>
+<pre class="language-dart"><code class="language-dart">// Enable paste events.
+stdout.writeAnsi(BracketedPaste.enable);
+
+// Disable paste events.
+stdout.writeAnsi(BracketedPaste.disable);
+</code></pre>
+<p>Once enabled, <code>Event.tryParse</code> will capture <code>PasteEvent</code>s:</p>
+<pre class="language-dart"><code class="language-dart">final event = Event.tryParse(input);
+switch (event) {
+  case PasteEvent e:
+    print('Paste event: ${e.text}');
+}
+</code></pre>
+<h2 id="capturing-focus-events">Capturing focus events</h2>
+<p>By default, focus events are not captured by most terminals.</p>
+<p>The <code>CaptureFocus</code> escape provides variants to enable and disable focus events:</p>
+<pre class="language-dart"><code class="language-dart">// Enable focus events.
+stdout.writeAnsi(CaptureFocus.enable);
+
+// Disable focus events.
+stdout.writeAnsi(CaptureFocus.disable);
+</code></pre>
+<p>After enabling focus events, <code>Event.tryParse</code> will capture <code>FocusEvent</code>s:</p>
+<pre class="language-dart"><code class="language-dart">final event = Event.tryParse(input);
+switch (event) {
+  case FocusEvent.gained:
+    print('Focus gained');
+  case FocusEvent.lost:
+    print('Focus lost');
+}
+</code></pre>
+<hr>
+<div style="text-align: center">
+<p><a href="Screen%20Manipulation-topic.html">◄ Screen Manipulation</a> |
+<a href="Parsing%20ANSI%20Text-topic.html">Parsing ANSI Text ►</a></p>
+</div>
+</section>
+
+
+
+  <section class="summary offset-anchor" id="classes">
+    <h2>Classes</h2>
+
+    <dl>
+      <dt id="CharKey">
+  <span class="name "><a href="../mansion/CharKey-class.html">CharKey</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A character key code, representing a single <a href="../mansion/CharKey/character.html">character</a> key.
+</dd>
+
+      <dt id="DisableMouseCapture">
+  <span class="name "><a href="../mansion/DisableMouseCapture-class.html">DisableMouseCapture</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that disables capturing <a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a> events.
+</dd>
+
+      <dt id="EnableMouseCapture">
+  <span class="name "><a href="../mansion/EnableMouseCapture-class.html">EnableMouseCapture</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that enables capturing <a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a> events.
+</dd>
+
+      <dt id="Event">
+  <span class="name "><a href="../mansion/Event-class.html">Event</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents an event.
+</dd>
+
+      <dt id="Key">
+  <span class="name "><a href="../mansion/Key-class.html">Key</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a key.
+</dd>
+
+      <dt id="KeyEvent">
+  <span class="name "><a href="../mansion/KeyEvent-class.html">KeyEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a key event.
+</dd>
+
+      <dt id="KeyModifiers">
+  <span class="name "><a href="../mansion/KeyModifiers-class.html">KeyModifiers</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents key modifiers (shift, control, alt, etc).
+</dd>
+
+      <dt id="MouseEvent">
+  <span class="name "><a href="../mansion/MouseEvent-class.html">MouseEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a mouse event.
+</dd>
+
+      <dt id="PasteEvent">
+  <span class="name "><a href="../mansion/PasteEvent-class.html">PasteEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A string that was pasted into the terminal.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+
+
+  <section class="summary offset-anchor" id="enums">
+    <h2>Enums</h2>
+
+    <dl>
+      <dt id="CaptureFocus">
+  <span class="name "><a href="../mansion/CaptureFocus.html">CaptureFocus</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that <a href="../mansion/CaptureFocus.html">enable</a>s or <a href="../mansion/CaptureFocus.html">disable</a>s capturing <a href="../mansion/FocusEvent.html">FocusEvent</a>s.
+</dd>
+
+      <dt id="CapturePaste">
+  <span class="name "><a href="../mansion/CapturePaste.html">CapturePaste</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/CapturePaste.html">enable</a>s or <a href="../mansion/CapturePaste.html">disable</a>s capturing <a href="../mansion/PasteEvent-class.html">PasteEvent</a>s.
+</dd>
+
+      <dt id="ControlKey">
+  <span class="name "><a href="../mansion/ControlKey.html">ControlKey</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a control key.
+</dd>
+
+      <dt id="FocusEvent">
+  <span class="name "><a href="../mansion/FocusEvent.html">FocusEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a focus event.
+</dd>
+
+      <dt id="MouseButton">
+  <span class="name "><a href="../mansion/MouseButton.html">MouseButton</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a mouse button.
+</dd>
+
+      <dt id="MouseCaptureMode">
+  <span class="name "><a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Different modes for capturing mouse events.
+</dd>
+
+      <dt id="MouseEventKind">
+  <span class="name "><a href="../mansion/MouseEventKind.html">MouseEventKind</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A <a href="../mansion/MouseEvent-class.html">MouseEvent</a> kind.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Event Handling topic</li>
+</ol>
+
+
+  <h5><span class="package-name">mansion</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Introduction-topic.html">Introduction</a></li>
+        <li><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></li>
+        <li><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></li>
+        <li><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></li>
+        <li><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></li>
+        <li><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></li>
+        <li><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../mansion/mansion-library.html">mansion</a></li>
+</ol>
+
+</div>
+
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <h5>Event Handling topic</h5>
+  <ol>
+
+    <li class="section-title"><a href="../topics/Event Handling-topic.html#classes">Classes</a></li>
+      <li><a href="../mansion/CharKey-class.html">CharKey</a></li>
+      <li><a href="../mansion/DisableMouseCapture-class.html">DisableMouseCapture</a></li>
+      <li><a href="../mansion/EnableMouseCapture-class.html">EnableMouseCapture</a></li>
+      <li><a href="../mansion/Event-class.html">Event</a></li>
+      <li><a href="../mansion/Key-class.html">Key</a></li>
+      <li><a href="../mansion/KeyEvent-class.html">KeyEvent</a></li>
+      <li><a href="../mansion/KeyModifiers-class.html">KeyModifiers</a></li>
+      <li><a href="../mansion/MouseEvent-class.html">MouseEvent</a></li>
+      <li><a href="../mansion/PasteEvent-class.html">PasteEvent</a></li>
+
+    <li class="section-title"><a href="../topics/Event Handling-topic.html#enums">Enums</a></li>
+      <li><a href="../mansion/CaptureFocus.html">CaptureFocus</a></li>
+      <li><a href="../mansion/CapturePaste.html">CapturePaste</a></li>
+      <li><a href="../mansion/ControlKey.html">ControlKey</a></li>
+      <li><a href="../mansion/FocusEvent.html">FocusEvent</a></li>
+      <li><a href="../mansion/MouseButton.html">MouseButton</a></li>
+      <li><a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a></li>
+      <li><a href="../mansion/MouseEventKind.html">MouseEventKind</a></li>
+
+
+
+
+
+
+
+
+</ol>
+
+</div>
+<!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

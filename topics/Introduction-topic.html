@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="Introduction topic docs, for the Dart programming language.">
+  <title>Introduction topic - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Introduction topic</li>
+  </ol>
+  <div class="self-name">Introduction</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Introduction</span> topic</h1>
+  
+<section class="desc markdown">
+  <h2 id="getting-started">Getting Started</h2>
+<p>To get started, follow the <a href="https://pub.dev/packages/mansion/install">package installation instructions</a>, or:</p>
+<pre class="language-shell"><code class="language-shell">dart pub add mansion
+</code></pre>
+<p>There is only a single library in the package, <code>mansion</code>:</p>
+<pre class="language-dart"><code class="language-dart">import 'package:mansion/mansion.dart';
+</code></pre>
+<h2 id="what-is-an-ansi-escape-code">What is an ANSI Escape Code?</h2>
+<p>An ANSI escape code is a sequence of characters that is used to control the formatting, color, and other output options of a text terminal. It is used to control the cursor position, clear the screen, change the text color, and other functions.</p>
+<p>For example, the following will print the text "Hello, World!" in red:</p>
+<pre class="language-dart"><code class="language-dart">print('\x1B[31mHello, World!\x1B[0m');
+</code></pre>
+<p>Above, the escape code <code>\x1B[31m</code> sets the text color to red, and the escape
+code <code>\x1B[0m</code> resets the text color to the default. The characters <code>\x1B[</code> are
+the escape sequence, and <code>31</code> is the color code for red.</p>
+<p>For more details, see:</p>
+<ul>
+<li><a href="https://notes.burke.libbey.me/ansi-escape-codes/">Everything you never wanted to know about ANSI escape codes</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a> on Wikipedia</li>
+</ul>
+<h2 id="where-can-i-use-ansi-escape-codes">Where can I use ANSI Escape Codes?</h2>
+<p>ANSI escape codes are supported by most modern terminals, including the Windows
+10 console, macOS Terminal, and most Linux terminals. They are also supported
+by many terminal emulators, such as <a href="https://github.com/alacritty/alacritty">Alacritty</a>, <a href="https://hyper.is/">Hyper</a>, and even in the browser using libraries like <a href="https://xtermjs.org/">xterm.js</a>.</p>
+<p>In a Dart command-line application, you can check if ANSI escape codes are
+supported by the terminal by using the <code>supportsAnsiEscapes</code> getter from the
+<code>dart:io</code> library:</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:io';
+
+void main() {
+  if (stdout.supportsAnsiEscapes) {
+    print('ANSI escape codes are supported!');
+  } else {
+    print('ANSI escape codes are not supported.');
+  }
+}
+</code></pre>
+<div class="markdown-alert markdown-alert-note">
+<p class="markdown-alert-title">Note</p>
+<p>This is a simple heuristic, and it may not always be accurate.</p>
+</div>
+<h2 id="using-this-library">Using this library</h2>
+<p>Now that you have a basic understanding of ANSI escape codes, you can use the
+<code>mansion</code> library to generate them programmatically, no weird strings required!</p>
+<p>The basic building block of the library if the <code>Sequence</code> type.</p>
+<p>For example, let's create a sequence that just prints 'Hello World':</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:io';
+
+import 'package:mansion/mansion.dart';
+
+void main() {
+  final sequence = Print('Hello, World!');
+  stdout.writeAnsi(sequence);
+}
+</code></pre>
+<p>This probably doesn't seem all that impressive, after-all we could have just
+used <code>print('Hello, World!')</code>. But the real power of the library comes from
+combining sequences together to create more complex output.</p>
+<p>Now let's create a sequence that prints 'Hello, World!' in red:</p>
+<pre class="language-dart"><code class="language-dart">import 'dart:io';
+
+import 'package:mansion/mansion.dart';
+
+void main() {
+  stdout.writeAnsiAll([
+    SetStyles.foreground(Color.red),
+    Print('Hello, World!'),
+    SetStyles.reset,
+    AsciiControl.lineFeed,
+  ]);
+}
+</code></pre>
+<pre style="background: #000; padding: 10px" class="language-dart"><span style="color: #cd0000">Hello, World!</span>
+</pre>
+<p>In this example, we use the <code>SetStyles(Style.foreground(...))</code> sequence to set
+the text color to red, then print 'Hello, World!', then reset the text color
+back to the default using <code>SetStyles.reset</code>, and finally add a line feed using
+<code>AsciiControl.lineFeed</code>.</p>
+<p>You can combine sequences in any way you like to create complex output. The
+library provides a wide range of sequences to control text formatting, colors,
+cursor position, and more.</p>
+<h2 id="where-did-writeansiall-come-from">Where did <code>writeAnsiAll</code> come from?</h2>
+<p>There are a few different ways to convert a <code>Sequence</code> to a string. Unlike
+some other libraries <code>toString()</code> is <em>not</em> used to convert a <code>Sequence</code> to a
+string (it returns a debug-friendly string instead that describes the sequence).</p>
+<ol>
+<li>
+<p>Use <code>&lt;Sequence&gt;.toAnsiString()</code> (an <em>extension method</em> on <code>Sequence</code>):</p>
+<pre class="language-dart"><code class="language-dart">final sequence = Print('Hello, World!');
+print(sequence.toAnsiString());
+</code></pre>
+<p>This is the most direct way to convert a <code>Sequence</code> to a string, but is not
+the most efficient, especially if you are writing to a buffer or stream. You
+won't see many examples of this in the documentation.</p>
+</li>
+<li>
+<p>Use <code>&lt;String&gt;.style</code> (an <em>extension method</em> on <code>String</code>):</p>
+<pre class="language-dart"><code class="language-dart">print('Hello World'.style(Style.bold, Style.foreground(Color.red)));
+</code></pre>
+<p>The easiest way to get started, similar to the APIs of other popular packages
+like <code>chalk</code> or <code>colored</code>. It is not as flexible as the other methods, and
+doesn't contain every feature of the library but could be good enough for
+simple CLI tools and scripts.</p>
+</li>
+<li>
+<p>Use <code>&lt;StringSink&gt;.writeAnsi(&lt;Sequence&gt;)</code> (an <em>extension method</em> on
+  <code>StringSink</code>):</p>
+<pre class="language-dart"><code class="language-dart">final sequence = Print('Hello, World!');
+final buffer = StringBuffer();
+buffer.writeAnsi(sequence);
+print(buffer.toString());
+</code></pre>
+<p>This is the most efficient way to convert a <code>Sequence</code> to a string, as it
+writes directly to a <code>StringSink</code> (which includes <a href="https://api.dart.dev/dart-core/StringBuffer-class.html"><code>StringBuffer</code></a>,
+<a href="https://api.dart.dev/dart-io/Stdout-class.html"><code>Stdout</code></a>, <a href="https://api.dart.dev/dart-io/IOSink-class.html"><code>IOSink</code></a>, etc.). This is the most common way to convert a
+<code>Sequence</code> to a string in the documentation.</p>
+<p>There is also a <code>writeAnsiAll</code> method that takes an <code>Iterable&lt;Sequence&gt;</code>:</p>
+<pre class="language-dart"><code class="language-dart">stdout.writeAnsiAll([
+  SetStyles(Style.foreground(Color.red))
+  Print('Hello, World!'),
+  SetStyles.reset,
+  AsciiControl.lineFeed,
+]);
+</code></pre>
+</li>
+<li>
+<p>Use <code>AnsiCodec</code>, <code>AnsiEncoder</code> or <code>encodeAnsi</code>.</p>
+<p>These are provided mostly for completeness and compatibility with
+<code>dart:convert</code> types, and are not particularly useful for general use.</p>
+<p>See <a href="Parsing%20ANSI%20Text-topic.html"><code>Parsing ANSI Text</code></a> for more
+information.</p>
+</li>
+</ol>
+<hr>
+<div style="text-align: center">
+<p><a href="Styles%20and%20Colors-topic.html">Styles &amp; Colors ►</a></p>
+</div>
+</section>
+
+
+
+  <section class="summary offset-anchor" id="classes">
+    <h2>Classes</h2>
+
+    <dl>
+      <dt id="Escape">
+  <span class="name "><a href="../mansion/Escape-class.html">Escape</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Base type for escape codes, a sequence with a special non-literal meaning.
+</dd>
+
+      <dt id="Print">
+  <span class="name "><a href="../mansion/Print-class.html">Print</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  A sequence that is a literal <a href="../mansion/Print/text.html">text</a> value that contains no escape codes.
+</dd>
+
+      <dt id="Sequence">
+  <span class="name "><a href="../mansion/Sequence-class.html">Sequence</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Base class for <a href="../mansion/Print-class.html">Print</a> and <a href="../mansion/Escape-class.html">Escape</a>, i.e. a sequences of characters.
+</dd>
+
+    </dl>
+  </section>
+
+
+  <section class="summary offset-anchor" id="extensions">
+    <h2>Extensions</h2>
+
+    <dl>
+      <dt id="AnsifyString">
+  <span class="name "><a href="../mansion/AnsifyString.html">AnsifyString</a></span>
+  on <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for transforming strings into ANSI strings.
+</dd>
+
+
+      <dt id="AnsiStringSink">
+  <span class="name "><a href="../mansion/AnsiStringSink.html">AnsiStringSink</a></span>
+  on W
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for writing ANSI <a href="../mansion/Sequence-class.html">Sequence</a>s to a <code>StringSink</code>.
+</dd>
+
+
+      <dt id="ToAnsiString">
+  <span class="name "><a href="../mansion/ToAnsiString.html">ToAnsiString</a></span>
+  on <a href="../mansion/Sequence-class.html">Sequence</a>
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for converting sequences to escaped strings.
+</dd>
+
+
+    </dl>
+  </section>
+
+
+
+
+  <section class="summary offset-anchor" id="enums">
+    <h2>Enums</h2>
+
+    <dl>
+      <dt id="AsciiControl">
+  <span class="name "><a href="../mansion/AsciiControl.html">AsciiControl</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  An escaped code that represents a single ASCII control character.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Introduction topic</li>
+</ol>
+
+
+  <h5><span class="package-name">mansion</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Introduction-topic.html">Introduction</a></li>
+        <li><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></li>
+        <li><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></li>
+        <li><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></li>
+        <li><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></li>
+        <li><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></li>
+        <li><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../mansion/mansion-library.html">mansion</a></li>
+</ol>
+
+</div>
+
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <h5>Introduction topic</h5>
+  <ol>
+
+    <li class="section-title"><a href="../topics/Introduction-topic.html#classes">Classes</a></li>
+      <li><a href="../mansion/Escape-class.html">Escape</a></li>
+      <li><a href="../mansion/Print-class.html">Print</a></li>
+      <li><a href="../mansion/Sequence-class.html">Sequence</a></li>
+
+    <li class="section-title"><a href="../topics/Introduction-topic.html#enums">Enums</a></li>
+      <li><a href="../mansion/AsciiControl.html">AsciiControl</a></li>
+
+
+
+
+
+
+
+
+  <li class="section-title"><a href="../topics/Introduction-topic.html#extensions">Extensions</a></li>
+  <li><a href="../mansion/AnsifyString.html">AnsifyString</a></li>
+  <li><a href="../mansion/AnsiStringSink.html">AnsiStringSink</a></li>
+  <li><a href="../mansion/ToAnsiString.html">ToAnsiString</a></li>
+</ol>
+
+</div>
+<!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

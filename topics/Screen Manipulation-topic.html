@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="Screen Manipulation topic docs, for the Dart programming language.">
+  <title>Screen Manipulation topic - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Screen Manipulation topic</li>
+  </ol>
+  <div class="self-name">Screen Manipulation</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Screen Manipulation</span> topic</h1>
+  
+<section class="desc markdown">
+  <p>An ANSI terminal allows control of the screen like a canvas or buffer, and also
+provides a few other ways to interact with the terminal, such as changing the
+size or title. The following sections will cover how to control the screen using
+ANSI escape codes.</p>
+<h2 id="scrolling-the-screen">Scrolling the screen</h2>
+<p>The screen can be scrolled up or down by a number of rows:</p>
+<pre class="language-dart"><code class="language-dart">// Scrolls the screen up by 3 rows.
+stdout.writeAnsi(ScrollUp.byRows(3));
+
+// Scrolls the screen down by 3 rows.
+stdout.writeAnsi(ScrollDown.byRows(3));
+</code></pre>
+<h2 id="clearing-the-screen">Clearing the screen</h2>
+<p>The <code>Clear</code> enum provides variants to clear the screen; the most common are
+<code>Clear.all</code> and <code>Clear.currentLine</code>:</p>
+<pre class="language-dart"><code class="language-dart">// Clears the entire screen.
+stdout.writeAnsi(Clear.all);
+
+// Clears the current line.
+stdout.writeAnsi(Clear.currentLine);
+</code></pre>
+<h2 id="changing-line-wrapping">Changing line wrapping</h2>
+<p>The <code>LineWrap</code> enum allows toggling line wrapping on or off:</p>
+<pre class="language-dart"><code class="language-dart">// Turns line wrapping off.
+stdout.writeAnsi(LineWrap.disable);
+
+// Turns line wrapping on.
+stdout.writeAnsi(LineWrap.enable);
+</code></pre>
+<h2 id="changing-the-screen-size">Changing the screen size</h2>
+<p>The <code>SetSize</code> class provides escape codes to set the screen size:</p>
+<pre class="language-dart"><code class="language-dart">// Sets the screen size to 80 columns by 24 rows.
+stdout.writeAnsi(SetSize(80, 24));
+</code></pre>
+<h2 id="changing-the-screen-title">Changing the screen title</h2>
+<p>The <code>SetTitle</code> class provides an escape code to set the screen title:</p>
+<pre class="language-dart"><code class="language-dart">// Sets the screen title to "My App".
+stdout.writeAnsi(SetTitle('My App'));
+</code></pre>
+<h2 id="entering-and-exiting-alternate-screen-mode">Entering and exiting alternate screen mode</h2>
+<p>The <code>AlternateScreen</code> enum allows entering and exiting alternate screen mode:</p>
+<pre class="language-dart"><code class="language-dart">// Enters alternate screen mode.
+stdout.writeAnsi(AlternateScreen.enter);
+
+// Exits alternate screen mode.
+stdout.writeAnsi(AlternateScreen.exit);
+</code></pre>
+<p>It is standard practice to enter alternate screen mode when starting a program
+and exit it when the program ends. This allows the program to run in a separate
+screen buffer, which is useful for full-screen applications like text editors or
+interactive programs.</p>
+<p>See <a href="Best%25Practices-topic.html">best practices</a> for more recommendations.</p>
+<h2 id="starting-and-ending-synchronous-updates">Starting and ending synchronous updates</h2>
+<p>The <code>SynchronousUpdate</code> enum allows starting and ending synchronous updates:</p>
+<pre class="language-dart"><code class="language-dart">// Starts synchronous updates.
+stdout.writeAnsi(SynchronousUpdate.start);
+
+// Ends synchronous updates.
+stdout.writeAnsi(SynchronousUpdate.end);
+</code></pre>
+<p>Synchronous updates are useful when you want to update the screen without
+flickering or other visual artifacts. This is especially useful when updating
+the screen in a loop or when updating multiple parts of the screen at once.</p>
+<p>See <a href="Best%25Practices-topic.html">best practices</a> for more recommendations.</p>
+<hr>
+<div style="text-align: center">
+<p><a href="Cursors%20and%20Positioning-topic.html">◄ Cursors and Positioning</a> |
+<a href="Event%20Handling-topic.html">Event Handling ►</a></p>
+</div>
+</section>
+
+
+
+  <section class="summary offset-anchor" id="classes">
+    <h2>Classes</h2>
+
+    <dl>
+      <dt id="ScrollDown">
+  <span class="name "><a href="../mansion/ScrollDown-class.html">ScrollDown</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that scrolls the screen down by <a href="../mansion/ScrollDown/rows.html">rows</a>.
+</dd>
+
+      <dt id="ScrollUp">
+  <span class="name "><a href="../mansion/ScrollUp-class.html">ScrollUp</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that scrolls the screen up by <a href="../mansion/ScrollUp/rows.html">rows</a>.
+</dd>
+
+      <dt id="SetSize">
+  <span class="name "><a href="../mansion/SetSize-class.html">SetSize</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the screen size to <a href="../mansion/SetSize/rows.html">rows</a> by <a href="../mansion/SetSize/columns.html">columns</a>.
+</dd>
+
+      <dt id="SetTitle">
+  <span class="name "><a href="../mansion/SetTitle-class.html">SetTitle</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the screen title to <a href="../mansion/SetTitle/title.html">title</a>.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+
+
+  <section class="summary offset-anchor" id="enums">
+    <h2>Enums</h2>
+
+    <dl>
+      <dt id="AlternateScreen">
+  <span class="name "><a href="../mansion/AlternateScreen.html">AlternateScreen</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/AlternateScreen.html">enter</a>s or <a href="../mansion/AlternateScreen.html">leave</a>s the alternate screen buffer.
+</dd>
+
+      <dt id="Clear">
+  <span class="name "><a href="../mansion/Clear.html">Clear</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape that clears all or part of the screen.
+</dd>
+
+      <dt id="LineWrap">
+  <span class="name "><a href="../mansion/LineWrap.html">LineWrap</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/LineWrap.html">enable</a>s or <a href="../mansion/LineWrap.html">disable</a>s line wrapping.
+</dd>
+
+      <dt id="SynchronousUpdates">
+  <span class="name "><a href="../mansion/SynchronousUpdates.html">SynchronousUpdates</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/SynchronousUpdates.html">start</a>s or <a href="../mansion/SynchronousUpdates.html">end</a>s synchronous updates.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">Screen Manipulation topic</li>
+</ol>
+
+
+  <h5><span class="package-name">mansion</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Introduction-topic.html">Introduction</a></li>
+        <li><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></li>
+        <li><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></li>
+        <li><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></li>
+        <li><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></li>
+        <li><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></li>
+        <li><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../mansion/mansion-library.html">mansion</a></li>
+</ol>
+
+</div>
+
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <h5>Screen Manipulation topic</h5>
+  <ol>
+
+    <li class="section-title"><a href="../topics/Screen Manipulation-topic.html#classes">Classes</a></li>
+      <li><a href="../mansion/ScrollDown-class.html">ScrollDown</a></li>
+      <li><a href="../mansion/ScrollUp-class.html">ScrollUp</a></li>
+      <li><a href="../mansion/SetSize-class.html">SetSize</a></li>
+      <li><a href="../mansion/SetTitle-class.html">SetTitle</a></li>
+
+    <li class="section-title"><a href="../topics/Screen Manipulation-topic.html#enums">Enums</a></li>
+      <li><a href="../mansion/AlternateScreen.html">AlternateScreen</a></li>
+      <li><a href="../mansion/Clear.html">Clear</a></li>
+      <li><a href="../mansion/LineWrap.html">LineWrap</a></li>
+      <li><a href="../mansion/SynchronousUpdates.html">SynchronousUpdates</a></li>
+
+
+
+
+
+
+
+
+</ol>
+
+</div>
+<!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

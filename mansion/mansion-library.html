@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="mansion library API docs, for the Dart programming language.">
+  <title>mansion library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">mansion.dart</li>
+  </ol>
+  <div class="self-name">mansion</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar=""
+    data-below-sidebar="mansion&#47;mansion-library-sidebar.html">
+  
+    <div>
+      
+
+      <h1>
+        <span class="kind-library">mansion</span>
+        library 
+ 
+
+      </h1>
+    </div>
+
+    
+<section class="desc markdown">
+  <p>A stately library for crafting and deciphering ANSI escape codes/sequences.</p>
+<p>This library provides a cross-platform abstraction for working with ANSI
+escape codes, a standard for <a href="https://en.wikipedia.org/wiki/In-band_signaling">in-band signaling</a> to control
+<a href="../mansion/CursorPosition-class.html">CursorPosition</a>, <a href="../mansion/Color-class.html">Color</a>, font styling, and other options on video text
+terminals and terminal emulators.</p>
+<h1 id="features">Features</h1>
+<p>The base type for all sequences is <a href="../mansion/Sequence-class.html">Sequence</a>, which represents either a
+<a href="../mansion/Print-class.html">Print</a> without escape codes, or a sub-type of <a href="../mansion/Escape-class.html">Escape</a> that
+represents a specific ANSI escape code.</p>
+<p>Sequences can be converted to/from strings using a variety of methods:</p>
+<ul>
+<li><a href="../mansion/Sequence/writeAnsiString.html">Sequence.writeAnsiString</a> writes to a <a href="https://api.dart.dev/stable/3.4.4/dart-core/StringSink-class.html">StringSink</a>.</li>
+<li><a href="../mansion/AnsiStringSink.html">AnsiStringSink</a>, extension methods for writing to a <a href="https://api.dart.dev/stable/3.4.4/dart-core/StringSink-class.html">StringSink</a>.</li>
+<li><a href="../mansion/AnsiCodec-class.html">AnsiCodec</a>, a <a href="https://api.dart.dev/stable/3.4.4/dart-convert/Codec-class.html">Codec</a> for encoding/decoding sequences.</li>
+</ul>
+<h2 id="cursor">Cursor</h2>
+<ul>
+<li>Visibility: <a href="../mansion/CursorVisibility.html">CursorVisibility</a>.</li>
+<li>Appearance: <a href="../mansion/CursorStyle.html">CursorStyle</a>.</li>
+<li>Position: <a href="../mansion/CursorPosition-class.html">CursorPosition</a> and subtypes (see factory constructors).</li>
+</ul>
+<h2 id="events">Events</h2>
+<ul>
+<li>Keyboard: <a href="../mansion/CapturePaste.html">CapturePaste</a>.</li>
+<li>Mouse: <a href="../mansion/EnableMouseCapture-class.html">EnableMouseCapture</a>, <a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a>.</li>
+</ul>
+<h2 id="style">Style</h2>
+<ul>
+<li>Styles: <a href="../mansion/SetStyles-class.html">SetStyles</a>.</li>
+<li>Colors: <a href="../mansion/Color-class.html">Color</a>.</li>
+<li>Attributes: <a href="../mansion/StyleText.html">StyleText</a>.</li>
+</ul>
+<h2 id="screen">Screen</h2>
+<ul>
+<li>Scrolling: <a href="../mansion/ScrollUp-class.html">ScrollUp</a>, <a href="../mansion/ScrollDown-class.html">ScrollDown</a>.</li>
+<li>Miscellaneous: <a href="../mansion/Clear.html">Clear</a>, <a href="../mansion/SetSize-class.html">SetSize</a>, <a href="../mansion/SetTitle-class.html">SetTitle</a>, <a href="../mansion/LineWrap.html">LineWrap</a>.</li>
+<li>Alternate screen: <a href="../mansion/AlternateScreen.html">AlternateScreen</a>, <a href="../mansion/SynchronousUpdates.html">SynchronousUpdates</a>.</li>
+</ul>
+</section>
+
+
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
+
+      <dl>
+          <dt id="AnsiCodec">
+  <span class="name "><a href="../mansion/AnsiCodec-class.html">AnsiCodec</a></span> 
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  An <a href="../mansion/AnsiCodec-class.html">AnsiCodec</a> allows encoding and decoding ANSI escape codes.
+</dd>
+
+          <dt id="AnsiDecoder">
+  <span class="name "><a href="../mansion/AnsiDecoder-class.html">AnsiDecoder</a></span> 
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  Converts a string with ANSI escape codes to a list of <a href="../mansion/Sequence-class.html">Sequence</a>s.
+</dd>
+
+          <dt id="AnsiEncoder">
+  <span class="name "><a href="../mansion/AnsiEncoder-class.html">AnsiEncoder</a></span> 
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  Encodes <a href="../mansion/Sequence-class.html">Sequence</a>s to ANSI escape codes.
+</dd>
+
+          <dt id="CharKey">
+  <span class="name "><a href="../mansion/CharKey-class.html">CharKey</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A character key code, representing a single <a href="../mansion/CharKey/character.html">character</a> key.
+</dd>
+
+          <dt id="Color">
+  <span class="name "><a href="../mansion/Color-class.html">Color</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Represents a color that can be used in ANSI escape codes, i.e. <a href="../mansion/SetStyles-class.html">SetStyles</a>.
+</dd>
+
+          <dt id="Color24">
+  <span class="name "><a href="../mansion/Color24-class.html">Color24</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  A 24-bit RGB color.
+</dd>
+
+          <dt id="Color8">
+  <span class="name "><a href="../mansion/Color8-class.html">Color8</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  An extended color palette that includes the base 16 colors and 240 more.
+</dd>
+
+          <dt id="ColorReset">
+  <span class="name "><a href="../mansion/ColorReset-class.html">ColorReset</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  A sentinel value that resets the current color to the terminal's default.
+</dd>
+
+          <dt id="CursorPosition">
+  <span class="name "><a href="../mansion/CursorPosition-class.html">CursorPosition</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the cursor position, either relative or absolute.
+</dd>
+
+          <dt id="DisableMouseCapture">
+  <span class="name "><a href="../mansion/DisableMouseCapture-class.html">DisableMouseCapture</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that disables capturing <a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a> events.
+</dd>
+
+          <dt id="EnableMouseCapture">
+  <span class="name "><a href="../mansion/EnableMouseCapture-class.html">EnableMouseCapture</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that enables capturing <a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a> events.
+</dd>
+
+          <dt id="Escape">
+  <span class="name "><a href="../mansion/Escape-class.html">Escape</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Base type for escape codes, a sequence with a special non-literal meaning.
+</dd>
+
+          <dt id="Event">
+  <span class="name "><a href="../mansion/Event-class.html">Event</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents an event.
+</dd>
+
+          <dt id="Key">
+  <span class="name "><a href="../mansion/Key-class.html">Key</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a key.
+</dd>
+
+          <dt id="KeyEvent">
+  <span class="name "><a href="../mansion/KeyEvent-class.html">KeyEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a key event.
+</dd>
+
+          <dt id="KeyModifiers">
+  <span class="name "><a href="../mansion/KeyModifiers-class.html">KeyModifiers</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents key modifiers (shift, control, alt, etc).
+</dd>
+
+          <dt id="MouseEvent">
+  <span class="name "><a href="../mansion/MouseEvent-class.html">MouseEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a mouse event.
+</dd>
+
+          <dt id="MoveDown">
+  <span class="name "><a href="../mansion/MoveDown-class.html">MoveDown</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor a given number of <a href="../mansion/MoveDown/rows.html">rows</a> down.
+</dd>
+
+          <dt id="MoveLeft">
+  <span class="name "><a href="../mansion/MoveLeft-class.html">MoveLeft</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor a given number of <a href="../mansion/MoveLeft/columns.html">columns</a> left.
+</dd>
+
+          <dt id="MoveRight">
+  <span class="name "><a href="../mansion/MoveRight-class.html">MoveRight</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor a given number of <a href="../mansion/MoveRight/columns.html">columns</a> right.
+</dd>
+
+          <dt id="MoveTo">
+  <span class="name "><a href="../mansion/MoveTo-class.html">MoveTo</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor to the given (<a href="../mansion/MoveTo/row.html">row</a>, <a href="../mansion/MoveTo/column.html">column</a>).
+</dd>
+
+          <dt id="MoveToColumn">
+  <span class="name "><a href="../mansion/MoveToColumn-class.html">MoveToColumn</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor to the given <a href="../mansion/MoveToColumn/column.html">column</a>.
+</dd>
+
+          <dt id="MoveUp">
+  <span class="name "><a href="../mansion/MoveUp-class.html">MoveUp</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that moves the cursor a given number of <a href="../mansion/MoveUp/rows.html">rows</a> up.
+</dd>
+
+          <dt id="PasteEvent">
+  <span class="name "><a href="../mansion/PasteEvent-class.html">PasteEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A string that was pasted into the terminal.
+</dd>
+
+          <dt id="Print">
+  <span class="name "><a href="../mansion/Print-class.html">Print</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  A sequence that is a literal <a href="../mansion/Print/text.html">text</a> value that contains no escape codes.
+</dd>
+
+          <dt id="RestoreCursor">
+  <span class="name "><a href="../mansion/RestoreCursor-class.html">RestoreCursor</a></span> 
+
+</dt>
+<dd>
+  An escape code that restores a previously saved cursor position.
+</dd>
+
+          <dt id="SaveCursor">
+  <span class="name "><a href="../mansion/SaveCursor-class.html">SaveCursor</a></span> 
+
+</dt>
+<dd>
+  An escape code that saves the current cursor position.
+</dd>
+
+          <dt id="ScrollDown">
+  <span class="name "><a href="../mansion/ScrollDown-class.html">ScrollDown</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that scrolls the screen down by <a href="../mansion/ScrollDown/rows.html">rows</a>.
+</dd>
+
+          <dt id="ScrollUp">
+  <span class="name "><a href="../mansion/ScrollUp-class.html">ScrollUp</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that scrolls the screen up by <a href="../mansion/ScrollUp/rows.html">rows</a>.
+</dd>
+
+          <dt id="Sequence">
+  <span class="name "><a href="../mansion/Sequence-class.html">Sequence</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Base class for <a href="../mansion/Print-class.html">Print</a> and <a href="../mansion/Escape-class.html">Escape</a>, i.e. a sequences of characters.
+</dd>
+
+          <dt id="SetSize">
+  <span class="name "><a href="../mansion/SetSize-class.html">SetSize</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the screen size to <a href="../mansion/SetSize/rows.html">rows</a> by <a href="../mansion/SetSize/columns.html">columns</a>.
+</dd>
+
+          <dt id="SetStyles">
+  <span class="name "><a href="../mansion/SetStyles-class.html">SetStyles</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Sets one or more text <a href="../mansion/Style-class.html">Style</a>s.
+</dd>
+
+          <dt id="SetTitle">
+  <span class="name "><a href="../mansion/SetTitle-class.html">SetTitle</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the screen title to <a href="../mansion/SetTitle/title.html">title</a>.
+</dd>
+
+          <dt id="Style">
+  <span class="name "><a href="../mansion/Style-class.html">Style</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  A marker type that represents a style that can be applied to the terminal.
+</dd>
+
+          <dt id="StyleBackground">
+  <span class="name "><a href="../mansion/StyleBackground-class.html">StyleBackground</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Style for setting the background color.
+</dd>
+
+          <dt id="StyleForeground">
+  <span class="name "><a href="../mansion/StyleForeground-class.html">StyleForeground</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Style for setting the foreground color.
+</dd>
+
+          <dt id="StyleReset">
+  <span class="name "><a href="../mansion/StyleReset-class.html">StyleReset</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Resets all styles to their default values.
+</dd>
+
+          <dt id="Unknown">
+  <span class="name "><a href="../mansion/Unknown-class.html">Unknown</a></span> 
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  Represents an escape code that was not recognized, i.e. during parsing.
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+
+      <dl>
+          <dt id="AlternateScreen">
+  <span class="name "><a href="../mansion/AlternateScreen.html">AlternateScreen</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/AlternateScreen.html">enter</a>s or <a href="../mansion/AlternateScreen.html">leave</a>s the alternate screen buffer.
+</dd>
+
+          <dt id="AsciiControl">
+  <span class="name "><a href="../mansion/AsciiControl.html">AsciiControl</a></span> 
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  An escaped code that represents a single ASCII control character.
+</dd>
+
+          <dt id="CaptureFocus">
+  <span class="name "><a href="../mansion/CaptureFocus.html">CaptureFocus</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape that <a href="../mansion/CaptureFocus.html">enable</a>s or <a href="../mansion/CaptureFocus.html">disable</a>s capturing <a href="../mansion/FocusEvent.html">FocusEvent</a>s.
+</dd>
+
+          <dt id="CapturePaste">
+  <span class="name "><a href="../mansion/CapturePaste.html">CapturePaste</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/CapturePaste.html">enable</a>s or <a href="../mansion/CapturePaste.html">disable</a>s capturing <a href="../mansion/PasteEvent-class.html">PasteEvent</a>s.
+</dd>
+
+          <dt id="Clear">
+  <span class="name "><a href="../mansion/Clear.html">Clear</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape that clears all or part of the screen.
+</dd>
+
+          <dt id="Color4">
+  <span class="name "><a href="../mansion/Color4.html">Color4</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  The base 16 (4-bit) colors available on almost all terminals.
+</dd>
+
+          <dt id="ControlKey">
+  <span class="name "><a href="../mansion/ControlKey.html">ControlKey</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a control key.
+</dd>
+
+          <dt id="CursorStyle">
+  <span class="name "><a href="../mansion/CursorStyle.html">CursorStyle</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that sets the cursor style.
+</dd>
+
+          <dt id="CursorVisibility">
+  <span class="name "><a href="../mansion/CursorVisibility.html">CursorVisibility</a></span> 
+    <span class="category cursors-and-positioning cp-2 linked" title="This is part of the Cursors and Positioning topic."><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/CursorVisibility.html">show</a>s or <a href="../mansion/CursorVisibility.html">hide</a>s the cursor.
+</dd>
+
+          <dt id="FocusEvent">
+  <span class="name "><a href="../mansion/FocusEvent.html">FocusEvent</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a focus event.
+</dd>
+
+          <dt id="LineWrap">
+  <span class="name "><a href="../mansion/LineWrap.html">LineWrap</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/LineWrap.html">enable</a>s or <a href="../mansion/LineWrap.html">disable</a>s line wrapping.
+</dd>
+
+          <dt id="MouseButton">
+  <span class="name "><a href="../mansion/MouseButton.html">MouseButton</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Represents a mouse button.
+</dd>
+
+          <dt id="MouseCaptureMode">
+  <span class="name "><a href="../mansion/MouseCaptureMode.html">MouseCaptureMode</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  Different modes for capturing mouse events.
+</dd>
+
+          <dt id="MouseEventKind">
+  <span class="name "><a href="../mansion/MouseEventKind.html">MouseEventKind</a></span> 
+    <span class="category event-handling cp-4 linked" title="This is part of the Event Handling topic."><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></span>
+
+</dt>
+<dd>
+  A <a href="../mansion/MouseEvent-class.html">MouseEvent</a> kind.
+</dd>
+
+          <dt id="StyleText">
+  <span class="name "><a href="../mansion/StyleText.html">StyleText</a></span> 
+    <span class="category styles-and-colors cp-1 linked" title="This is part of the Styles and Colors topic."><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></span>
+
+</dt>
+<dd>
+  Represents an attribute that effects the <em>style</em> of the text.
+</dd>
+
+          <dt id="SynchronousUpdates">
+  <span class="name "><a href="../mansion/SynchronousUpdates.html">SynchronousUpdates</a></span> 
+    <span class="category screen-manipulation cp-3 linked" title="This is part of the Screen Manipulation topic."><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  An escape code that <a href="../mansion/SynchronousUpdates.html">start</a>s or <a href="../mansion/SynchronousUpdates.html">end</a>s synchronous updates.
+</dd>
+
+      </dl>
+    </section>
+
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+
+      <dl>
+          <dt id="AnsifyString">
+  <span class="name "><a href="../mansion/AnsifyString.html">AnsifyString</a></span>
+  on <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a>
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for transforming strings into ANSI strings.
+</dd>
+
+
+          <dt id="AnsiStringSink">
+  <span class="name "><a href="../mansion/AnsiStringSink.html">AnsiStringSink</a></span>
+  on W
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+    <span class="category best-practices cp-6 linked" title="This is part of the Best Practices topic."><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for writing ANSI <a href="../mansion/Sequence-class.html">Sequence</a>s to a <code>StringSink</code>.
+</dd>
+
+
+          <dt id="ToAnsiString">
+  <span class="name "><a href="../mansion/ToAnsiString.html">ToAnsiString</a></span>
+  on <a href="../mansion/Sequence-class.html">Sequence</a>
+  
+    <span class="category introduction cp-0 linked" title="This is part of the Introduction topic."><a href="../topics/Introduction-topic.html">Introduction</a></span>
+
+</dt>
+<dd>
+  Provides extension methods for converting sequences to escaped strings.
+</dd>
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constants">
+      <h2>Constants</h2>
+
+      <dl class="properties">
+          <dt id="ansi" class="constant">
+    <span class="name "><a href="../mansion/ansi-constant.html">ansi</a></span>
+  <span class="signature">&#8594; const <a href="../mansion/AnsiCodec-class.html">AnsiCodec</a></span>
+  
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  An instance of the default implementation of the <a href="../mansion/AnsiCodec-class.html">AnsiCodec</a>.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="functions">
+      <h2>Functions</h2>
+
+      <dl class="callables">
+          <dt id="decodeAnsi" class="callable">
+  <span class="name"><a href="../mansion/decodeAnsi.html">decodeAnsi</a></span><span class="signature">(<wbr><span class="parameter" id="decodeAnsi-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span> <span class="parameter-name">input</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../mansion/Sequence-class.html">Sequence</a></span>&gt;</span></span>
+  </span>
+  
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  Decodes ANSI escape codes from UTF-16 encoded strings to <a href="../mansion/Sequence-class.html">Sequence</a>s.
+  
+
+</dd>
+
+          <dt id="encodeAnsi" class="callable">
+  <span class="name"><a href="../mansion/encodeAnsi.html">encodeAnsi</a></span><span class="signature">(<wbr><span class="parameter" id="encodeAnsi-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../mansion/Sequence-class.html">Sequence</a></span>&gt;</span></span> <span class="parameter-name">input</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.4.4/dart-core/String-class.html">String</a></span>
+  </span>
+  
+    <span class="category parsing-ansi-text cp-5 linked" title="This is part of the Parsing ANSI Text topic."><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></span>
+
+</dt>
+<dd>
+  Encodes <a href="../mansion/Sequence-class.html">Sequence</a>s to UTF-16 encoded strings.
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">mansion</a></li>
+    <li class="self-crumb">mansion.dart</li>
+</ol>
+
+
+    <h5><span class="package-name">mansion</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Introduction-topic.html">Introduction</a></li>
+        <li><a href="../topics/Styles and Colors-topic.html">Styles&nbsp;and&nbsp;Colors</a></li>
+        <li><a href="../topics/Cursors and Positioning-topic.html">Cursors&nbsp;and&nbsp;Positioning</a></li>
+        <li><a href="../topics/Screen Manipulation-topic.html">Screen&nbsp;Manipulation</a></li>
+        <li><a href="../topics/Event Handling-topic.html">Event&nbsp;Handling</a></li>
+        <li><a href="../topics/Parsing ANSI Text-topic.html">Parsing&nbsp;ANSI&nbsp;Text</a></li>
+        <li><a href="../topics/Best Practices-topic.html">Best&nbsp;Practices</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../mansion/mansion-library.html">mansion</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <h5>mansion library</h5>
+  </div><!--/sidebar-offcanvas-right-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

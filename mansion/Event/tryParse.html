@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the tryParse method from the Event class, for the Dart programming language.">
+  <title>tryParse method - Event class - mansion library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">mansion</a></li>
+    <li><a href="../../mansion/mansion-library.html">mansion.dart</a></li>
+    <li><a href="../../mansion/Event-class.html">Event</a></li>
+    <li class="self-crumb">tryParse static method</li>
+  </ol>
+  <div class="self-name">tryParse</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="mansion&#47;Event-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">tryParse</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+
+<span class="returntype"><a href="../../mansion/Event-class.html">Event</a>?</span>
+<span class="name ">tryParse</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="tryParse-param-codes"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.4.4/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.4.4/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">codes</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Tries to parse a list of <code>codes</code> into an <a href="../../mansion/Event-class.html">Event</a></p>
+<p>Returns <code>null</code> if the event could not be parsed.</p>
+<p><strong>NOTE</strong>: This method is not as heavily tested as other parts of the
+library, and could be made more robust. If you encounter issues, such as
+events not being parsed that you'd expect to be, please file an issue.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Event? tryParse(List&lt;int&gt; codes) {
+  return switch (codes) {
+    [0x00] =&gt; const KeyEvent(ControlKey.null$),
+    [0x0a] =&gt; const KeyEvent(ControlKey.enter),
+    [0x09] =&gt; const KeyEvent(ControlKey.tab),
+    [0x1b] =&gt; const KeyEvent(ControlKey.escape),
+    [0x1b, 0x5b, ...final rest] =&gt; switch (rest) {
+        [0x32, 0x30, 0x30, 0x7e, ...final data] =&gt; PasteEvent._tryParse(data),
+        [0x32, 0x7e] =&gt; const KeyEvent(ControlKey.insert),
+        [0x33, 0x7e] =&gt; const KeyEvent(ControlKey.delete),
+        [0x35, 0x7e] =&gt; const KeyEvent(ControlKey.pageUp),
+        [0x36, 0x7e] =&gt; const KeyEvent(ControlKey.pageDown),
+        [0x3c, ...final rest] =&gt; MouseEvent._tryParseSgr(rest),
+        [0x41] =&gt; const KeyEvent(ControlKey.upArrow),
+        [0x42] =&gt; const KeyEvent(ControlKey.downArrow),
+        [0x43] =&gt; const KeyEvent(ControlKey.rightArrow),
+        [0x44] =&gt; const KeyEvent(ControlKey.leftArrow),
+        [0x46] =&gt; const KeyEvent(ControlKey.end),
+        [0x48] =&gt; const KeyEvent(ControlKey.home),
+        [0x49] =&gt; FocusEvent.gained,
+        [0x4f] =&gt; FocusEvent.lost,
+        [0x5a] =&gt; const KeyEvent(ControlKey.backTab),
+        _ =&gt; null,
+      },
+    [0x7f] =&gt; const KeyEvent(ControlKey.backspace),
+    [final char]
+        when char &gt;= 32 &amp;&amp; char &lt;= 126 || char &gt;= 128 &amp;&amp; char &lt;= 255 =&gt;
+      KeyEvent(
+        CharKey(String.fromCharCode(char)),
+      ),
+    _ =&gt; null,
+  };
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">mansion</a></li>
+    <li><a href="../../mansion/mansion-library.html">mansion</a></li>
+    <li><a href="../../mansion/Event-class.html">Event</a></li>
+    <li class="self-crumb">tryParse static method</li>
+</ol>
+
+
+    <h5>Event class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    mansion
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
