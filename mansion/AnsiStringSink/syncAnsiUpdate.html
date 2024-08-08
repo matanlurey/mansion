@@ -64,9 +64,8 @@
       
 
 <span class="returntype">T</span>
-<span class="name ">syncAnsiUpdate</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list"><li><span class="parameter" id="syncAnsiUpdate-param-update"><span class="type-annotation">T</span> <span class="parameter-name">update</span>(<ol class="parameter-list"><li><span class="parameter" id="param-"><span class="type-annotation">W</span></span></li>
-</ol>
-)</span></li>
+<span class="name ">syncAnsiUpdate</span>&lt;<wbr><span class="type-parameter">T</span>&gt;(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="syncAnsiUpdate-param-update"><span class="type-annotation">T</span> <span class="parameter-name">update</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-"><span class="type-annotation">W</span></span></li>
+</ol>)</span></li>
 </ol>)
 
       
@@ -104,12 +103,9 @@ void main() async {
   <pre class="language-dart"><code class="language-dart">T syncAnsiUpdate&lt;T&gt;(T Function(W) update) {
   writeAnsi(SynchronousUpdates.start);
   try {
-    final result = update(this);
+    return update(this);
+  } finally {
     writeAnsi(SynchronousUpdates.end);
-    return result;
-  } on Object catch (_) {
-    writeAnsi(SynchronousUpdates.end);
-    rethrow;
   }
 }</code></pre>
 </section>
